@@ -21,7 +21,7 @@ from galicaster.recorder.utils import get_videosink
 
 pipestr = (' videotestsrc name=gc-videotest-src pattern=0 is-live=true ! capsfilter name=gc-videotest-filter ! videobox name=gc-videotest-videobox top=0 bottom=0 !'
            ' queue ! videoconvert ! video/x-raw ! tee name=tee-vt  ! '
-           ' queue ! caps-preview ! gc-vsink '
+           ' queue ! caps-preview ! videoconvert ! gc-vsink '
            ' tee-vt. ! queue ! valve drop=false name=gc-videotest-valve ! videoconvert ! queue ! '
            ' gc-videotest-enc ! queue ! gc-videotest-mux ! '
            ' queue ! filesink name=gc-videotest-sink async=false')
@@ -89,8 +89,8 @@ class GCvideotest(Gst.Bin, base.Base):
             },
         "videosink" : {
             "type": "select",
-            "default": "xvimagesink",
-            "options": ["xvimagesink", "ximagesink", "autovideosink", "fpsdisplaysink","fakesink"],
+            "default": "gtkglsink",
+            "options": ["xvimagesink", "ximagesink", "autovideosink", "fpsdisplaysink","fakesink", "gtkglsink"],
             "description": "Video sink",
         },
         "caps-preview" : {

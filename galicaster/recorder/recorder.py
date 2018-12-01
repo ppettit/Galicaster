@@ -394,13 +394,27 @@ class Recorder(object):
 
         # Link videoareas with sinks
         for name, element in self.players.iteritems():
+            print name, element.get_parent()
             # TODO: check xid
-            xid = element.get_property('window').get_xid()
+            xid = None
             try:
-                getattr(self.pipeline.get_by_name(name), 'set_window_handle')
-                self.pipeline.get_by_name(name).set_window_handle(xid)
-            except Exception:
-                logger.warning("Pipeline {} doesn't have set_window_handle".format(name))
+                xid = element.get_property('window').get_xid()
+            except Exception as e:
+                logger.info("No xid - not running on X?")
+            if xid:
+                try:
+                    getattr(self.pipeline.get_by_name(name), 'set_window_handle')
+                    self.pipeline.get_by_name(name).set_window_handle(xid)
+                except Exception:
+                    logger.warning("Pipeline {} doesn't have set_window_handle".format(name))
+            else:
+                container = element.get_parent()
+                widget =  self.pipeline.get_by_name(name).props.widget
+                temp_window = widget.get_parent()
+                temp_window.remove(widget)
+                temp_window.close()
+                container.pack_start(widget, True, True, 0)
+                container.show_all()
 
     def get_display_areas_info(self):
         display_areas_info = []
@@ -414,3 +428,6 @@ class Recorder(object):
         for bin_name, bin in self.bins.iteritems():
             bins_info.extend(bin.get_bins_info())
         return bins_info
+
+    def get_video_widgets(self):
+        pass

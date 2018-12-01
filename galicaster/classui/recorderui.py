@@ -510,6 +510,7 @@ class RecorderClassUI(Gtk.Box):
             i+=1
 
         for source in sources[i:]:
+            print source
             new_area = Gtk.DrawingArea()
             new_area.set_name(source)
             new_area.modify_bg(Gtk.StateType.NORMAL, Gdk.color_parse("black"))

@@ -69,6 +69,7 @@ class RecorderService(object):
         self.__create_drawing_areas_func = None
         self.__handle_recover_id = None
         self.autorecover = autorecover
+        self.video_widgets = None
 
         self.logger.info("Autorecover mode: {}".format(self.autorecover))
 
@@ -129,6 +130,7 @@ class RecorderService(object):
                 info = self.recorder.get_display_areas_info()
                 areas = self.__create_drawing_areas_func(info)
                 self.recorder.set_drawing_areas(areas)
+                self.video_widgets = self.recorder.get_video_widgets()
 
         Gdk.threads_add_idle(GLib.PRIORITY_HIGH, drawing_areas_wrapper)
 
