@@ -193,7 +193,7 @@ class OCService(object):
         try:
             self.client.welcome()
             self.__set_opencast_up()
-            self.jobs.put((self.update_series,()))
+            #self.jobs.put((self.update_series,()))
             if self.conf.tracks_visible_to_opencast():
                 self.logger.info('Be careful using profiles and opencast scheduler')
         except Exception as exc:
