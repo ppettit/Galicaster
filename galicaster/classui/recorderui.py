@@ -473,7 +473,7 @@ class RecorderClassUI(Gtk.Box):
     def show_about(self,button=None,tipe = None):
         text = {"title" : _("About"),
                     "main" : ''}
-        message.PopUp(message.ABOUT, text, context.get_mainwindow())
+        #message.PopUp(message.ABOUT, text, context.get_mainwindow())
 
     def create_drawing_areas(self, sources):
         """Create as preview areas as video sources exits"""
